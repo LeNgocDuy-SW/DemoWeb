@@ -1,0 +1,21 @@
+/* Khung chứa toàn bộ danh sách */
+.list-container {
+  width: 300px;
+  background-color: #f0f0f0; /* Màu nền xám nhạt */
+  padding: 20px;
+  border-radius: 15px; /* Bo góc tròn */
+  list-style: none; /* Xóa dấu chấm của thẻ ul */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Khoảng cách giữa các thẻ con */
+}
+
+/* Từng mục nhỏ trong danh sách */
+.list-item {
+  background-color: #ffffff; /* Màu nền trắng */
+  padding: 15px;
+  border-radius: 8px; /* Bo góc nhẹ */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Đổ bóng cho đẹp */
+  font-weight: bold;
+  color: #333;
+}

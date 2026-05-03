@@ -1,0 +1,6 @@
+Framer Motion là COmponent motion thay vì sử dụng các thẻ html thông thường như <div> hay <button></button>
+    Thì sẽ dùng <motion.div></motion.div>, <motion.h1/>
+Các props quan trọng giúp tạo hiệu ứng
++) initial : trạng thái bắt đầu của phần tử trước khi nó hiện trên màn hình (Ví dụ : vô hình, bị thu nhỏ)
++) animate : Trạng thái kết thúc mà ptu sẽ chuyển động tới (Ví dụ: hiển thị hoàn toàn, kích thước bình thường)
++) transition : Cách thức chuyển động diễn ra (ví dụ : thời gian bao lâu, kiểu chuyển động là mượt mà hay nảy lên)
