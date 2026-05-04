@@ -56,7 +56,7 @@ export default function SPLienQuan(){
                             </div>
                         </div>
                         <div className="absolute group bottom-2 right-3 group/heart flex items-center 
-                            rounded-lg gap-2 p-1 hover:bg-gray-200 cursor-pointer"
+                            rounded-lg gap-2 p-1 hover:bg-gray-200 cursor-pointer hover:scale-105 transition-all duration-200"
                             onClick={(e) => {
                             e.stopPropagation();
                             toast.success("Đã thêm vào yêu thích ❤️");

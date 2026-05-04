@@ -2,14 +2,20 @@ import { useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import GioHang from "./GioHang.jsx";
 import SPLienQuan from "../components/SanPhamLienQuan.jsx";
+import BannerSp from "../components/BannerSP.jsx";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { FaGift } from "react-icons/fa";
+import { FiGift } from "react-icons/fi";
+
 export default function ChiTietSP() {
-  const images = ["/video_sp4.mp4", "/nike4.jpg", "/video_sp2.mp4", "/video_sp3.mp4"];
-  const sizes = [37, 38, 39, 40, 41];
+  const [selectedID, setSelectedID] = useState(0);
+  const images = ["/video_sp4.mp4", "/tainghe1.mp4", "/video_sp2.mp4", "/video_sp3.mp4"];
+  const version = [1, 2, 3];
   const colors = ["bg-black", "bg-red-400", "bg-blue-400"];
 
   const [activeImg, setActiveImg] = useState(images[0]);
   const [activeSize, setActiveSize] = useState(null);
-  const [activeColor, setActiveColor] = useState(null);
+
   const [count, setCount] = useState(0);
   const nutTang = () =>{
     setCount(prev => prev + 1)
@@ -60,8 +66,16 @@ export default function ChiTietSP() {
       setCartCount(prev => prev + 1);
     }
   };
-
-  
+  const mausac=[
+    {image: "./tainghe1.png", mau: "Hồng khói", gia: "6.890.000đ"},
+    {image: "./tainghe2.png", mau: "Xanh ánh trăng", gia: "6.890.000đ"},
+    {image: "./tainghe3.png", mau: "Bạc", gia: "6.890.000đ"},
+  ];
+  const km =[
+    {stt: "1", vl: "trả góp 0% lãi suất, tối đa 12 tháng, trả trước từ 10% qua CTTC hoặc 0đ qua thẻ tín dụng"},
+    {stt: "2", vl: "Giảm 1,000,000đ khi mua kèm combo Iphone 17 Series + Apple Watch (Không kèm ưu đãi khác)"},
+    {stt: "3", vl: "Giảm thêm 10% cho Pin dự phòng - Camera giám sát - Đồng hồ trẻ em - Gia dụng - Sức khỏe Làm đẹp khi mua Điện thoại/Laptop"},
+  ];
   return (
     <div>
       <Navbar cartCount={cartCount}/> 
@@ -81,14 +95,14 @@ export default function ChiTietSP() {
         />
       )}
 
-      <main className=" flex flex-col gap-3 max-w-7xl mx-auto mt-10 py-3 px-8 bg-white rounded-3xl">
+      <main className=" flex flex-col gap-5 max-w-7xl mx-auto mt-10 py-3 px-8 bg-white rounded-3xl pb-20">
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* LEFT: INFO (GALLERY) */}
         <div className="flex flex-col gap-4">
           {/* Cố định tỷ lệ khung hình vuông cho ảnh chính */}
           <div id ="main-product-image"
-           className="w-full aspect-square bg-black  rounded-2xl overflow-hidden relative">
+           className="w-full aspect-square bg-gray-100  rounded-2xl overflow-hidden relative">
             {isVideo(activeImg) ? (
               // Nếu là video thì dùng thẻ <video>
               <video 
@@ -103,7 +117,7 @@ export default function ChiTietSP() {
               // Nếu là ảnh thì dùng thẻ <img> như cũ
               <img 
                 src={activeImg} 
-                className="w-full h-full object-cover transition-all duration-300" 
+                className="w-full h-full object-containt transition-all duration-300" 
                 alt="Product" 
               />
             )}
@@ -133,51 +147,52 @@ export default function ChiTietSP() {
         </div>
 
         {/* RIGHT: OPTIONS */}
-        <div className="flex flex-col gap-8 pt-8 ">
+        <div className="flex flex-col gap-4 pt-8 ">
 
           {/* BỔ SUNG: TITLE & DESCRIPTION */}
           <div>
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight">SNEAKER PRO X</h1>
+            <h1 className="text-4xl font-black text-gray-900 tracking-tight uppercase">JBL Live 660NC</h1>
             <p className="text-gray-500 mt-3 leading-relaxed">
-              Giày thể thao nam cao cấp với thiết kế khí động học, đế đệm trợ lực siêu nhẹ giúp bạn thoải mái di chuyển suốt cả ngày dài.
+             JBL Live 660NC với thiết kế chống ồn dòng cao cấp, được trang bị bộ xử lý QN1. Đây là một trong những tai nghe chụp tai tốt trong phân khúc chống ồn chủ động.
             </p>
           </div>
-
-          {/* SIZE */}
-          <div>
-            <span className="font-bold text-gray-900 uppercase text-sm tracking-wider">Chọn Size</span>
-            <div className="flex flex-wrap gap-3 mt-3">
-              {sizes.map((size) => (
-                <div
-                  key={size}
-                  onClick={() => setActiveSize(size)}
-                  className={`w-14 h-12 flex items-center justify-center rounded-xl border-2 cursor-pointer font-semibold transition-all duration-200
-                  ${activeSize === size ? "border-blue-600 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}
-                >
-                  {size}
-                </div>
-              ))}
-            </div>
-          </div>
-
+          
           {/* COLOR */}
-          <div>
-              <span className="font-bold text-gray-900 uppercase text-sm tracking-wider">Chọn Màu</span>
-              <div className="flex gap-4 mt-3">
-                {colors.map((color, index) => (
-                  <div
-                    key={index}
-                    onClick={() => setActiveColor(index)}
-                    className={`w-10 h-10 rounded-full cursor-pointer shadow-sm ${color} transition-transform duration-200
-                    ${activeColor === index ? "scale-110 ring-4 ring-offset-2 ring-blue-200" : "hover:scale-110"}`}
-                  />
-                ))}
-                <div className="bg-gray-100 border border-gray-200 h-10 w-32 rounded-full ml-20 px-1 flex items-center justify-between">
-                  <button onClick ={()=> nutGiam()} className="w-8 h-8 pb-1 flex items-center justify-center text-2xl hover:bg-gray-200 rounded-full transition-colors">-</button>
-                  <span>{count}</span>
-                  <button onClick = {() => nutTang()} className="w-8 h-8 pb-1 flex items-center justify-center text-2xl hover:bg-gray-200 rounded-full transition-colors">+</button>
-
+          <div className="flex flex-col gap-2">
+              <h2 className="font-bold mb-1">Phiên bản</h2>
+              <div className="flex gap-3">
+              {version.map((item, index) =>(
+                <div key={index} className="h-10 w-full border border-gray-200 rounded-lg p-2 items-center cursor-pointer">
+                  <p className="text-center font-semibold">JBL-100XM6</p>
                 </div>
+              ))}</div>
+              <span className="font-bold text-gray-900 uppercase text-sm tracking-wider mt-1">Chọn Màu</span>
+              <div className="flex gap-3 mt-3 ">
+                {mausac.map((color, index) => {
+                  const isSelected = selectedID ===index;
+                  return (
+                  <div onClick= {() => setSelectedID(index)}
+                    key={index}
+                    className={`relative h-auto border w-full border-gray-200 flex p-2 gap-3 
+                    rounded-lg items-center cursor-pointer ${isSelected
+                      ? "border-blue-600 bg-blue-50 shadow-md ring-1 ring-blue-600"
+                      : "border-gray-200 bg-white hover:border-gray-300"
+                    }`}
+                  >
+                    <img src={color.image}
+                    className="h-10 w-10"></img>
+                    <div>
+                      <p className="font-semibold">{color.mau}</p>
+                      <p>{color.gia}</p>
+                    </div>
+                    {isSelected && (
+                      <div className="absolute top-1 right-1 text-blue-600 bg-white rounded-full">
+                        <AiFillCheckCircle className="text-xl" />
+                      </div>
+                    )}
+                  </div>
+                );})}
+                
               </div>
              
       
@@ -187,22 +202,46 @@ export default function ChiTietSP() {
           
           {/* CHÂN TRANG: PRICE & BUTTON */}
           <div className="flex  flex-col items-center gap-6 mt-4 pt-8 border-t border-gray-100">
-            <div className="flex w-full items-center justify-between">
-              <span className="text-xl text-gray-500 font-bold uppercase">Tổng tiền</span>
-              <span className="text-3xl font-black text-blue-600">$450</span>
-            </div>
-            
             <button onClick= {nutThemCart}
             onClick ={handleAddToCart}
-             className="flex-1 w-full bg-gray-900 text-white text-lg font-bold py-4 rounded-2xl 
-             shadow-lg hover:bg-gray-700 hover:shadow-gray-700 
+             className="flex-1 w-full bg-blue-600 text-white text-lg font-bold py-4 rounded-2xl 
+             shadow-lg hover:bg-blue-800 hover:shadow-gray-700 
              hover:scale-105 active:scale-95 transition-all duration-200">
-              Thêm vào giỏ hàng
+              Thêm vào giỏ hàng <span>🛒</span>
+            </button>
+            <button
+             className="flex-1 w-full bg-yellow-300 text-black text-lg font-bold py-4 rounded-2xl 
+             shadow-lg hover:bg-yellow-500 hover:shadow-gray-700 
+             hover:scale-105 active:scale-95 transition-all duration-200 uppercase ">
+              Mua Ngay
             </button>
           </div>
-        </div></div>
+          <div className="border w-full h-auto p-2 bg-green-50 rounded-lg border border-yellow-300 flex flex-col gap-2">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <FiGift size={22} className="text-red-500 "/>
+              <p className="font-semibold text-lg">Khuyến mãi đi kèm</p>
+              </div>
+              <a href="/" className="text-red-500 font-semibold text-sm">Xem tất cả voucher</a>
+            </div>
+            {km.map((item, index) =>(
+              <div key={index} className="flex gap-6">
+                  <div className="w-7 h-7 flex-shrink-0 rounded-full bg-green-200 flex items-center justify-center font-semibold 
+                  border border-yellow-500">
+                    {item.stt}
+                  </div>
+                  <p className="text-gray-700 font-medium">{item.vl}</p>
+              
+              </div>
+            ))}
+            
+          </div>
+        </div>
+        
+        </div>
 
         <SPLienQuan/>
+        <BannerSp className="absolute bottom-2 right-4"/>
       </main>
     </div>
   );
