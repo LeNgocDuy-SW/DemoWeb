@@ -6,6 +6,8 @@ import BannerSp from "../components/BannerSP.jsx";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaGift } from "react-icons/fa";
 import { FiGift } from "react-icons/fi";
+import ThongSo from "../components/ThongSoSP.jsx";
+import Camket from "../components/CamKetSP.jsx";
 
 export default function ChiTietSP() {
   const [selectedID, setSelectedID] = useState(0);
@@ -68,8 +70,8 @@ export default function ChiTietSP() {
   };
   const mausac=[
     {image: "./tainghe1.png", mau: "Hồng khói", gia: "6.890.000đ"},
-    {image: "./tainghe2.png", mau: "Xanh ánh trăng", gia: "6.890.000đ"},
-    {image: "./tainghe3.png", mau: "Bạc", gia: "6.890.000đ"},
+    {image: "./tainghe2.png", mau: "Xanh ánh trăng", gia: "6.990.000đ"},
+    {image: "./tainghe3.png", mau: "Bạc", gia: "6.590.000đ"},
   ];
   const km =[
     {stt: "1", vl: "trả góp 0% lãi suất, tối đa 12 tháng, trả trước từ 10% qua CTTC hoặc 0đ qua thẻ tín dụng"},
@@ -107,7 +109,7 @@ export default function ChiTietSP() {
               // Nếu là video thì dùng thẻ <video>
               <video 
                 src={activeImg} 
-                className="w-full h-full object-containt"
+                className="w-full h-full object-contain"
                 autoPlay // Tự động chạy
                 loop     // Lặp lại liên tục
                 muted    // Tắt tiếng (Bắt buộc phải có để trình duyệt cho phép tự động chạy)
@@ -117,7 +119,7 @@ export default function ChiTietSP() {
               // Nếu là ảnh thì dùng thẻ <img> như cũ
               <img 
                 src={activeImg} 
-                className="w-full h-full object-containt transition-all duration-300" 
+                className="w-full h-full object-contain transition-all duration-300" 
                 alt="Product" 
               />
             )}
@@ -129,7 +131,7 @@ export default function ChiTietSP() {
               <div
                 key={index}
                 onClick={() => setActiveImg(img)}
-                className={` w-full h-1/2 cursor-pointer rounded-xl overflow-hidden border-2 transition-all duration-200
+                className={` w-full aspect-square cursor-pointer rounded-xl overflow-hidden border-2 transition-all duration-200
                 ${activeImg === img ? "border-blue-600 opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`}
               >
                 {isVideo(img) ? (
@@ -144,6 +146,7 @@ export default function ChiTietSP() {
               </div>
             ))}
           </div>
+          <ThongSo/>
         </div>
 
         {/* RIGHT: OPTIONS */}
@@ -234,8 +237,8 @@ export default function ChiTietSP() {
               
               </div>
             ))}
-            
           </div>
+          <Camket />
         </div>
         
         </div>

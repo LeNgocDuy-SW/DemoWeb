@@ -8,16 +8,16 @@ import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 export default function SPLienQuan(){
     const listsp = [
-        {label: "JBL Live 660NC", image: "tainghe1.png"},
-        {label: "Baseus Bowie D05", image: "tainghe2.png"},
-        {label: "Picun B8", image: "tainghe3.png"},
-        {label: "Bmooster", image: "tainghe4.png"},
-        {label: "Soundcore Space Q45", image: "tainghe5.png"},
-        {label: "JBL Live 660NC", image: "tainghe1.png"},
-        {label: "Baseus Bowie D05", image: "tainghe2.png"},
-        {label: "Picun B8", image: "tainghe3.png"},
-        {label: "Beats Pro", image: "tainghe6.png"},
-        {label: "Soundcore Space Q45", image: "tainghe5.png"},
+        {label: "JBL Live 660NC", image: "tainghe1.png", gia: "5.690.000đ"},
+        {label: "Baseus Bowie D05", image: "tainghe2.png", gia: "6.690.000đ"},
+        {label: "Picun B8", image: "tainghe3.png", gia: "4.690.000đ"},
+        {label: "Bmooster", image: "tainghe4.png", gia: "5.690.000đ"},
+        {label: "Soundcore Space Q45", image: "tainghe5.png", gia: "8.690.000đ"},
+        {label: "JBL Live 660NC", image: "tainghe1.png", gia: "5.690.000đ"},
+        {label: "Baseus Bowie D05", image: "tainghe2.png", gia: "6.690.000đ"},
+        {label: "Picun B8", image: "tainghe3.png", gia: "4.690.000đ"},
+        {label: "Beats Pro", image: "tainghe6.png", gia: "9.690.000đ"},
+        {label: "Soundcore Space Q45", image: "tainghe5.png", gia: "8.690.000đ"},
     ]
     const listSP = ["tainghe1.png", "tainghe2.png",
         "tainghe3.png", "tainghe4.png", "tainghe5.png", 
@@ -33,8 +33,8 @@ export default function SPLienQuan(){
                 <h2 className="text-xl font-semibold text-gray-600">Sản Phẩm Tương Tự</h2>
                 <a href="#" className="text-xl font-semibold text-gray-600">View All</a>
             </div>
-            <div className="gap-4 grid gid-cols-2 md:grid-cols-3 
-            lg:grid-cols-5 mt-4">
+            <div className=" gap-4 grid gid-cols-2 md:grid-cols-3 
+                lg:grid-cols-5 mt-4">
                 {listsp.map((item, index) => (
                     <div key={index} className="relative group  h-full border rounded-lg border-gray-200
                     shadow-lg shadow-gray-300 shadow-s p-3 flex flex-col pb-12"
@@ -47,8 +47,8 @@ export default function SPLienQuan(){
                         </div>
                         <div className="mt-auto">
                             <div className="flex items-center gap-2 mb-2">
-                                <p className="text-red-600 font-bold text-lg font-bold tracking-tight ">34.290.000đ</p>
-                                <p className="text-gray-400 line-through">34.990.000đ</p>
+                                <p className="text-red-600 font-bold text-lg font-bold tracking-tight ">{item.gia}</p>
+                                <p className="text-gray-400 line-through">7.990.000đ</p>
                             </div>
                             
                             <div className=" bg-gray-200 rounded-sm px-1 mb-2">
@@ -68,6 +68,15 @@ export default function SPLienQuan(){
                            group-hover/heart:opacity-100 group-hover/heart:scale-100 group-hover/heart:animate-blink"/> 
                            <p className="font-normal text-blue-500">Yêu thích</p>
                         </div>
+                        <div className="absolute right-0 top-0 
+                        rounded-sm gap-2 p-1 bg-yellow-500 transition-all duration-200 ">
+                            <p className="text-sm font-semibold">Trả góp 0%</p>
+                        </div>
+                        <div className="absolute left-3 top-[-5px] 
+                        rounded-sm gap-2 p-1 bg-red-700 transition-all duration-200">
+                            <p className="text-white text-sm font-medium">Giảm 14%</p>
+                        </div>
+                        
                     </div>
                 ))}
             </div>
