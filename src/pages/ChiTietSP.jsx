@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState} from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import GioHang from "./GioHang.jsx";
 import SPLienQuan from "../components/SanPhamLienQuan.jsx";
@@ -8,6 +9,7 @@ import { FaGift } from "react-icons/fa";
 import { FiGift } from "react-icons/fi";
 import ThongSo from "../components/ThongSoSP.jsx";
 import Camket from "../components/CamKetSP.jsx";
+import DanhGia from "../components/DanhGia.jsx";
 
 export default function ChiTietSP() {
   const [selectedID, setSelectedID] = useState(0);
@@ -15,8 +17,25 @@ export default function ChiTietSP() {
   const version = [1, 2, 3];
   const colors = ["bg-black", "bg-red-400", "bg-blue-400"];
 
+  const navigate = useNavigate();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const MuaNgay = () => {
+    setCartCount(prev => prev + 1);
+    navigate('/cart')
+  }
   const [activeImg, setActiveImg] = useState(images[0]);
   const [activeSize, setActiveSize] = useState(null);
+
+  const [sanPhamHienTai, setSanPhamHienTai] = useState({
+    label: "JBL Live 660NC",
+    gia: "6.890.000đ", 
+    image: "./tainghe1."
+  });
+  const handleChonSanPhamMoi = (sp) => {
+    setSanPhamHienTai(sp);
+    setActiveImg(sp.image);
+    window.scrollTo({top:0, behavior: "smooth"})
+  }
 
   const [count, setCount] = useState(0);
   const nutTang = () =>{
@@ -74,13 +93,14 @@ export default function ChiTietSP() {
     {image: "./tainghe3.png", mau: "Bạc", gia: "6.590.000đ"},
   ];
   const km =[
-    {stt: "1", vl: "trả góp 0% lãi suất, tối đa 12 tháng, trả trước từ 10% qua CTTC hoặc 0đ qua thẻ tín dụng"},
+    {stt: "1", vl: "trả góp 0% lãi suất, tối đa 9 tháng, trả trước từ 10% qua CTTC hoặc 0đ qua thẻ tín dụng"},
     {stt: "2", vl: "Giảm 1,000,000đ khi mua kèm combo Iphone 17 Series + Apple Watch (Không kèm ưu đãi khác)"},
     {stt: "3", vl: "Giảm thêm 10% cho Pin dự phòng - Camera giám sát - Đồng hồ trẻ em - Gia dụng - Sức khỏe Làm đẹp khi mua Điện thoại/Laptop"},
   ];
   return (
     <div>
       <Navbar cartCount={cartCount}/> 
+      
       {flyingStyle && (
         <img
           // Nếu ảnh gốc là video, ta dùng ảnh số 2 làm ảnh bay cho mượt
@@ -154,9 +174,12 @@ export default function ChiTietSP() {
 
           {/* BỔ SUNG: TITLE & DESCRIPTION */}
           <div>
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight uppercase">JBL Live 660NC</h1>
+            <h1 className="text-4xl font-black text-gray-900 tracking-tight uppercase">{sanPhamHienTai.label}</h1>
+            <p className="text-3xl font-bold text-red-600 mt-2">
+                {sanPhamHienTai.gia}
+            </p>
             <p className="text-gray-500 mt-3 leading-relaxed">
-             JBL Live 660NC với thiết kế chống ồn dòng cao cấp, được trang bị bộ xử lý QN1. Đây là một trong những tai nghe chụp tai tốt trong phân khúc chống ồn chủ động.
+             {sanPhamHienTai.label} với thiết kế chống ồn dòng cao cấp, được trang bị bộ xử lý QN1. Đây là một trong những tai nghe chụp tai tốt trong phân khúc chống ồn chủ động.
             </p>
           </div>
           
@@ -212,7 +235,7 @@ export default function ChiTietSP() {
              hover:scale-105 active:scale-95 transition-all duration-200">
               Thêm vào giỏ hàng <span>🛒</span>
             </button>
-            <button
+            <button onClick={MuaNgay}
              className="flex-1 w-full bg-yellow-300 text-black text-lg font-bold py-4 rounded-2xl 
              shadow-lg hover:bg-yellow-500 hover:shadow-gray-700 
              hover:scale-105 active:scale-95 transition-all duration-200 uppercase ">
@@ -243,8 +266,10 @@ export default function ChiTietSP() {
         
         </div>
 
-        <SPLienQuan/>
-        <BannerSp className="absolute bottom-2 right-4"/>
+        <SPLienQuan onSelectProduct={handleChonSanPhamMoi}/>
+        <BannerSp sanPhamHienTai={sanPhamHienTai} onMuaNgay = {MuaNgay}
+         className="absolute bottom-2 right-4"/>
+         <DanhGia sanPhamHienTai={sanPhamHienTai}/>
       </main>
     </div>
   );

@@ -26,7 +26,8 @@ export default function ThanhToan() {
     {label: "Subtotal", value: "$360.00"},
     {label: "Shipping", value: "FREE"},
     {label: "Tax", value: "$29.02"},
-  ]
+  ];
+  const giamacdinh = 2000;
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
@@ -111,7 +112,6 @@ export default function ThanhToan() {
               </div>
           </div>
         </div>
-
         {/**Thẻ phải */}
         <div className="w-full flex flex-col p-5 bg-white rounded-lg gap-3 border border-gray-200">
           <span className="font-semibold text-2xl">Order Summary</span>
@@ -149,15 +149,16 @@ export default function ThanhToan() {
           ))}
           <div className="flex justify-between items-center">
             <span className="text-gray-500 font-semibold">Total</span>
-            <span className="font-semibold text-xl">$389.02</span>
+            <span className="font-semibold text-xl">{giamacdinh}</span>
           </div>
 
-          <button className=" flex items-center justify-center gap-2 border 
+          <a href={`https://qr.sepay.vn/img?bank=Vietcombank&acc=9339582134&template=compact&amount=${giamacdinh}&des=`}
+           className=" flex items-center justify-center gap-2 border 
           p-2 bg-blue-600 rounded-lg hover:scale-105 hover:bg-blue-700 shadow-lg 
           active:scale-95 transition-all hover:shadow-gray-700 duration-300 cursor-pointer">
             <span className="text-white font-bold text-xl tracking-widest">PLACE ORDER</span>
             <FaArrowRight className="text-white"/>
-          </button>
+          </a>
         </div>
       </main>
     </div>

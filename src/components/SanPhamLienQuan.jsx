@@ -6,7 +6,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Link, useNavigate  } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-export default function SPLienQuan(){
+export default function SPLienQuan({onSelectProduct}){
     const listsp = [
         {label: "JBL Live 660NC", image: "tainghe1.png", gia: "5.690.000đ"},
         {label: "Baseus Bowie D05", image: "tainghe2.png", gia: "6.690.000đ"},
@@ -18,12 +18,16 @@ export default function SPLienQuan(){
         {label: "Picun B8", image: "tainghe3.png", gia: "4.690.000đ"},
         {label: "Beats Pro", image: "tainghe6.png", gia: "9.690.000đ"},
         {label: "Soundcore Space Q45", image: "tainghe5.png", gia: "8.690.000đ"},
-    ]
+    ];
+    const [activeName, setActiveName] = useState(listsp[0].label);
+    const [activeImg, setActiveImg] = useState(listsp[0].image);
+    const [activeGia, setActiveGia] = useState(listsp[0].gia);
+
     const listSP = ["tainghe1.png", "tainghe2.png",
         "tainghe3.png", "tainghe4.png", "tainghe5.png", 
         "tainghe1.png", "tainghe2.png",
         "tainghe3.png", "tainghe6.png", "tainghe5.png"
-    ]
+    ];
     const navigate = useNavigate();
     return(
         
@@ -36,9 +40,10 @@ export default function SPLienQuan(){
             <div className=" gap-4 grid gid-cols-2 md:grid-cols-3 
                 lg:grid-cols-5 mt-4">
                 {listsp.map((item, index) => (
-                    <div key={index} className="relative group  h-full border rounded-lg border-gray-200
-                    shadow-lg shadow-gray-300 shadow-s p-3 flex flex-col pb-12"
-                    onClick={() => window.location.href = "/"}>
+                    <div key={index} onClick={() => onSelectProduct(item)}
+                    className={`relative group  h-full border rounded-lg border-gray-200
+                    shadow-lg shadow-gray-300 shadow-s p-3 flex flex-col pb-12`}
+                  >
                         <div className="cursor-pointer flex-col ">
                             <div className="h-45 py-3">
                                 <img className="w-full h-full object-contain group-hover:scale-110 trasition-transform duration-300" src={item.image}></img>

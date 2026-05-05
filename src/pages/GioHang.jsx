@@ -4,7 +4,7 @@ import {useState} from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export default function GioHang() {
+export default function GioHang(spMoiThem) {
   const navigate = useNavigate();
   const [listcarts, setListCarts] = useState([
     {img: './tainghe1.png', price: '$180.000', quantity: 1},
