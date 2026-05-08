@@ -1,44 +1,30 @@
 import Navbar from "../components/Navbar";
 import { FaTrash } from "react-icons/fa";
 import {useState} from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext.jsx";
 
-export default function GioHang(spMoiThem) {
+export default function GioHang() {
   const navigate = useNavigate();
-  const [listcarts, setListCarts] = useState([
-    {img: './tainghe1.png', price: '$180.000', quantity: 1},
-    {img: './tainghe2.png', price: '$240.000', quantity: 1},
-    {img: './tainghe3.png', price: '$399.000', quantity: 1},
-    {img: './tainghe4.png', price: '$399.000', quantity: 1},
-    {img: './tainghe5.png', price: '$180.000', quantity: 1},
-    {img: './tainghe6.png', price: '$240.000', quantity: 1},
-    {img: './tainghe1.png', price: '$399.000', quantity: 1},
-    {img: './tainghe2.png', price: '$399.000', quantity: 1},
-  ]);
+  const { listcarts, nutTang, nutGiam, nutRemove } = useCart();
+
+  const subtotal = listcarts.reduce((acc, item) => {
+    const priceNum = parseInt(item.gia.replace(/[^0-9]/g, ''), 10) || 0;
+    return acc + (priceNum * item.quantity);
+  }, 0);
+
+  const tax = subtotal * 0.08; // 8% VAT
+  const total = subtotal + tax;
+
+  const formatPrice = (num) => num.toLocaleString('vi-VN') + "đ";
+
   const listTotal = [
-    {title: "Subtotal", val: "$824.00"},
+    {title: "Subtotal", val: formatPrice(subtotal)},
     {title: "Estimated Shipping", val: "FREE"},
-    {title: "Tax", val: "$65.92"},
+    {title: "Tax", val: formatPrice(tax)},
   ];
 
   const [count, setCount] = useState(0);
-  const nutGiam = (index) => {
-    const newList = [...listcarts];
-    if(newList[index].quantity > 1){
-      newList[index].quantity -=1;
-      setListCarts(newList);
-    }
-  };
-  const nutTang = (index) =>{
-    const newList = [...listcarts];
-    newList[index].quantity += 1;
-    setListCarts(newList);
-  };
-  const nutRemove = (index) =>{
-    const newList = listcarts.filter((_, i) => i !== index);
-    setListCarts(newList);
-  }
 
   const thanhToan = () =>{
     if(listcarts.length === 0){
@@ -56,17 +42,17 @@ export default function GioHang(spMoiThem) {
             <div className="bg-yellow-300 p-2 rounded-lg">
                <h2 className="font-semibold text-[25px] bg-red-">Giỏ hàng</h2>
             </div>
-            <span className="text-gray-600">3 items</span>
+            <span className="text-gray-600">{listcarts.length} items</span>
           </div>
           
           <div className ="p-6 bg-white shadow-sm font-sans rounded-lg flex flex-col gap-3 border border-gray-100">
             {listcarts.map((items, index)=>(
               <div className="flex justify-between items-center border-b  p-3"> 
                 <div className="flex items-center gap-6">
-                  <img src={items.img} alt="product" className ="w-32 h-full object-contain" />
+                  <img src={items.image} alt="product" className ="w-32 h-full object-contain" />
                   <div className="ml-5 flex flex-col gap-2">
-                    <span className="font-bold text-gray-800 ">Air Max Catalyst</span>
-                    <p className="text-gray-600">Size: US10 | Color: Racing Red</p>
+                    <span className="font-bold text-gray-800 ">{items.label}</span>
+                    <p className="text-gray-600">{items.category}</p>
                     <button onClick ={() => nutRemove(index)} className="flex gap-3 items-center hover:scale-105 transiton hover:bg-gray-100 rounded-full p-1 cursor-pointer">
                       <FaTrash className="text-yellow-500"/>
                       <span className="text-yellow-500">Remove</span>
@@ -86,7 +72,9 @@ export default function GioHang(spMoiThem) {
                       <span className="font-black text-xl">+</span>
                     </button></div>
                   </div>
-                  <span className="font-bold text-gray-800 text-xl">{items.price}</span>
+                  <span className="font-bold text-gray-800 text-xl">
+                    {formatPrice((parseInt(items.gia.replace(/[^0-9]/g, ''), 10) || 0) * items.quantity)}
+                  </span>
                 </div>
               </div>
             ))}
@@ -111,7 +99,7 @@ export default function GioHang(spMoiThem) {
                 <span className="font-semibold text-xl ">Total</span>
                 <span className="text-gray-500">VAT Included</span>
               </div>
-              <h2 className="font-bold text-[25px]">$889.92</h2>
+              <h2 className="font-bold text-[25px]">{formatPrice(total)}</h2>
             </div>
 
               <button onClick={() => thanhToan()} className="w-full p-3 bg-blue-600 rounded-lg hover:scale-105 

@@ -1,8 +1,22 @@
 import { FaSearch , FaShoppingCart, FaUser} from "react-icons/fa";
 import {useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
-export default function Navbar({cartCount =0}){
+export default function Navbar(){
+    const { cartCount } = useCart();
+    const { user, openAuthModal } = useAuth();
+    const navigate = useNavigate();
+
+    const handleUserClick = () => {
+        if (user) {
+            navigate('/profile');
+        } else {
+            openAuthModal();
+        }
+    };
+
     const tabs =["Collections", "New Arrivals", "Sale"];
     const [activeTab, setActiveTab] = useState(tabs[0]);
     return(
@@ -12,7 +26,7 @@ export default function Navbar({cartCount =0}){
         bg-blue-100 backdrop-blur-md shadow-sm
         flex justify-between items-center px-8 py-4">
             <Link to="/" className="text-2xl font-black">
-                LUXE
+                Snapcart
             </Link>
             <div className="flex gap-6 font-semibold">
                 {tabs.map((tab, index)=>(
@@ -38,9 +52,19 @@ export default function Navbar({cartCount =0}){
                         </span>
                     )}
                 </Link>
-                <FaUser className="text-xl text-gray-500 hover:scale-110 trannsition cursor-pointer"></FaUser>
+                {user?.role === "admin" && (
+                    <Link to="/admin" className="hidden md:flex items-center gap-2 px-3 py-1 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700 transition-all">
+                        ADMIN PANEL
+                    </Link>
+                )}
+                <div onClick={handleUserClick} className="relative hover:scale-110 transition cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-100">
+                    {user ? (
+                        <img src={user.avatar} alt="User" className="w-full h-full rounded-full object-cover" />
+                    ) : (
+                        <FaUser className="text-xl text-gray-500" />
+                    )}
+                </div>
             </div>
-            
         </nav>
     )
 }

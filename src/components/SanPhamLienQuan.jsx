@@ -6,29 +6,26 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Link, useNavigate  } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-export default function SPLienQuan({onSelectProduct}){
-    const listsp = [
-        {label: "JBL Live 660NC", image: "tainghe1.png", gia: "5.690.000đ"},
-        {label: "Baseus Bowie D05", image: "tainghe2.png", gia: "6.690.000đ"},
-        {label: "Picun B8", image: "tainghe3.png", gia: "4.690.000đ"},
-        {label: "Bmooster", image: "tainghe4.png", gia: "5.690.000đ"},
-        {label: "Soundcore Space Q45", image: "tainghe5.png", gia: "8.690.000đ"},
-        {label: "JBL Live 660NC", image: "tainghe1.png", gia: "5.690.000đ"},
-        {label: "Baseus Bowie D05", image: "tainghe2.png", gia: "6.690.000đ"},
-        {label: "Picun B8", image: "tainghe3.png", gia: "4.690.000đ"},
-        {label: "Beats Pro", image: "tainghe6.png", gia: "9.690.000đ"},
-        {label: "Soundcore Space Q45", image: "tainghe5.png", gia: "8.690.000đ"},
-    ];
-    const [activeName, setActiveName] = useState(listsp[0].label);
-    const [activeImg, setActiveImg] = useState(listsp[0].image);
-    const [activeGia, setActiveGia] = useState(listsp[0].gia);
+import { products } from "../data/products.js";
+import { useAuth } from "../context/AuthContext.jsx";
 
-    const listSP = ["tainghe1.png", "tainghe2.png",
-        "tainghe3.png", "tainghe4.png", "tainghe5.png", 
-        "tainghe1.png", "tainghe2.png",
-        "tainghe3.png", "tainghe6.png", "tainghe5.png"
-    ];
+export default function SPLienQuan({ currentProduct }){
+    // Lọc sản phẩm: loại bỏ sản phẩm hiện tại
+    let listsp = products.filter(p => p.id !== currentProduct?.id);
+    
+    // Ưu tiên các sản phẩm cùng danh mục lên đầu
+    listsp.sort((a, b) => {
+        if (a.category === currentProduct?.category && b.category !== currentProduct?.category) return -1;
+        if (a.category !== currentProduct?.category && b.category === currentProduct?.category) return 1;
+        return 0;
+    });
+
+    // Lấy 5 sản phẩm đầu tiên
+    listsp = listsp.slice(0, 5);
+
     const navigate = useNavigate();
+    const { user, toggleFavorite } = useAuth();
+    
     return(
         
         <div>
@@ -40,12 +37,12 @@ export default function SPLienQuan({onSelectProduct}){
             <div className=" gap-4 grid gid-cols-2 md:grid-cols-3 
                 lg:grid-cols-5 mt-4">
                 {listsp.map((item, index) => (
-                    <div key={index} onClick={() => onSelectProduct(item)}
+                    <Link to={`/product/${item.id}`} key={item.id}
                     className={`relative group  h-full border rounded-lg border-gray-200
                     shadow-lg shadow-gray-300 shadow-s p-3 flex flex-col pb-12`}
                   >
                         <div className="cursor-pointer flex-col ">
-                            <div className="h-45 py-3">
+                            <div className="h-45 py-3 bg-gray-300 rounded-xl">
                                 <img className="w-full h-full object-contain group-hover:scale-110 trasition-transform duration-300" src={item.image}></img>
                             </div>
                             <p className="font-semibold text-lg line-clamp-2 mb-2">Tai nghe {item.label}</p>
@@ -63,14 +60,21 @@ export default function SPLienQuan({onSelectProduct}){
                         <div className="absolute group bottom-2 right-3 group/heart flex items-center 
                             rounded-lg gap-2 p-1 hover:bg-gray-200 cursor-pointer hover:scale-105 transition-all duration-200"
                             onClick={(e) => {
-                            e.stopPropagation();
-                            toast.success("Đã thêm vào yêu thích ❤️");
+                                e.preventDefault();
+                                e.stopPropagation();
+                                toggleFavorite(item);
                             }}>
-                           <AiOutlineHeart className="absolute text-blue-500 text-2xl transition-opacity duration-200
-                           group-hover/heart:opacity-0"/> 
-                           <AiFillHeart className="text-blue-500 text-2xl opacity-0 scale-75 
-                           transition-all duration-200 
-                           group-hover/heart:opacity-100 group-hover/heart:scale-100 group-hover/heart:animate-blink"/> 
+                           {user?.favorites?.some(p => p.id === item.id) ? (
+                               <AiFillHeart className="text-blue-500 text-2xl animate-bounce" />
+                           ) : (
+                               <>
+                                <AiOutlineHeart className="absolute text-blue-500 text-2xl transition-opacity duration-200
+                                group-hover/heart:opacity-0"/> 
+                                <AiFillHeart className="text-blue-500 text-2xl opacity-0 scale-75 
+                                transition-all duration-200 
+                                group-hover/heart:opacity-100 group-hover/heart:scale-100 group-hover/heart:animate-blink"/> 
+                               </>
+                           )}
                            <p className="font-normal text-blue-500">Yêu thích</p>
                         </div>
                         <div className="absolute right-0 top-0 
@@ -82,7 +86,7 @@ export default function SPLienQuan({onSelectProduct}){
                             <p className="text-white text-sm font-medium">Giảm 14%</p>
                         </div>
                         
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
